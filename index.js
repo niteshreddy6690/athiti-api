@@ -10,9 +10,10 @@ import RoomProductRoutes from "./routes/roomProductRoutes.js";
 import AuditRoutes from "./routes/auditRoutes.js";
 import AuditItemRoutes from "./routes/auditItemRoutes.js"; // Assuming you have a route for audit items
 import BookingRoutes from "./routes/bookingRoutes.js"
+import helmet from "helmet";
 
 const app = express();
-
+app.use(helmet());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());  
@@ -47,9 +48,9 @@ app.use("/api/audit-item", AuditItemRoutes);
 app.use("/api/booking",BookingRoutes)
 
 
-// app.get("/", (req, res) => {
-//   res.send("Welcome to the API");
-// });
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
 
 
 app.listen(process.env.PORT || 8080, () => {
