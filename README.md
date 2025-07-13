@@ -1,6 +1,6 @@
 # 🧠 Project Name
 
-A Node.js-based backend service that handles [brief description of functionality — e.g., hotel room booking, guest management, etc.].
+A Node.js-based backend service that handles  hotel room booking, guest management..
 
 ## 📦 Tech Stack
 
