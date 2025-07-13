@@ -9,6 +9,7 @@ import Guest from "../models/Guest.js";
 import Audit from "../models/Audit.js";
 import roomServices from "../services/roomServices.js";
 
+
 const createGuest = catchAsync(async (req, res) => {
     const guestBody = req.body;
     console.log("Guest Body:", guestBody);
@@ -135,14 +136,7 @@ const checkOutGuest = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to update room status");
   }
 
-    // const updatedBookingResponse = await bookingServices.updateAuditById(
-    // auditBody?.bookingId,
-    // bookingBody
-    // );
 
-    // if(!updatedBookingResponse){
-    //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Error occurred while updating the booking");
-    // }
 
 
     // if(auditBody?.auditType === "maintenance"){

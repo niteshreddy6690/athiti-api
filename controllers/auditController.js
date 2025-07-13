@@ -78,7 +78,11 @@ if (auditBody?.auditType === "check-in") {
   };
   bookingBody["totalCharges"]=auditBody.totalCharges
   bookingBody["status"]="checked-in"
+  bookingBody["checkInTime"]=new Date()
 } else if (auditBody?.auditType === "check-out") {
+
+
+    console.log("auditBody",auditBody,"check-out")
   bookingBody["auditStatus.checkOut"] = {
     required: true,
     completed: true,
@@ -86,10 +90,30 @@ if (auditBody?.auditType === "check-in") {
     completedAt: newAudit?.createdAt || new Date(),
     completedBy: auditBody.auditedBy || "System"
   };
-   bookingBody["totalCharges"]=0
    bookingBody["status"]="checked-out"
+   bookingBody["totalCharges"]=auditBody.totalCharges
+   bookingBody["checkOutTime"]=new Date()
+} else if (auditBody?.auditType === "maintenance") {
+  bookingBody["auditStatus.maintenance"] = {
+    required: true,
+    completed: true,
+    auditId: newAudit?._id,
+    completedAt: newAudit?.createdAt || new Date(),
+    completedBy: auditBody.auditedBy || "System"
+  };
+   bookingBody["status"]="maintenance"
+   bookingBody["totalCharges"]=auditBody.totalCharges
+
 }
 
+  const updatedBookingResponse = await bookingServices.updateAuditById(
+    auditBody?.bookingId,
+    bookingBody
+    );
+
+    if(!updatedBookingResponse){
+        throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Error occurred while updating the booking");
+    }
 
     res.status(httpStatus.CREATED).json(newAudit);
 });
