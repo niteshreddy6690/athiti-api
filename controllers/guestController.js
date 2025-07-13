@@ -135,6 +135,31 @@ const checkOutGuest = catchAsync(async (req, res) => {
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Failed to update room status");
   }
 
+    // const updatedBookingResponse = await bookingServices.updateAuditById(
+    // auditBody?.bookingId,
+    // bookingBody
+    // );
+
+    // if(!updatedBookingResponse){
+    //     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Error occurred while updating the booking");
+    // }
+
+
+    // if(auditBody?.auditType === "maintenance"){
+    //     const updatedRoom = await roomServices.updateRoomById(auditBody.roomId, {status:"maintenance"});
+    //     if (!updatedRoom) {
+    //         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Error occurred while updating the room");
+    //     }
+    // }
+
+    // if(auditBody.auditType==="check-out"){
+    //     const updatedRoom = await roomServices.updateRoomById(auditBody.roomId, {status:"available",currentGuestId:null});
+    //     if (!updatedRoom) {
+    //         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, "Error occurred while updating the room");
+    //     }
+    // }
+
+
   res.status(200).json(checkedOutGuest);
 });
 
@@ -142,23 +167,23 @@ const checkOutGuest = catchAsync(async (req, res) => {
 
 export const getGuestsRoomsAuditStatus = async (req, res) => {
   try {
-    // Get all guests with populated rooms
+   
     const guests = await Guest.find()
      
 
-    // Get all audits
+
     const audits = await Audit.find().lean();
 
-    // Build nested response structure
+
     const response = {};
 
     guests.forEach(guest => {
-      // Get audits for this guest
+      
       const guestAudits = audits.filter(audit => 
         audit.guestId.toString() === guest._id.toString()
       );
 
-      // Build guest structure
+  
       response[guest._id] = {
         guestDetails: {
           id: guest._id,
